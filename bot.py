@@ -2,8 +2,9 @@ import telebot
 import config
 import os
 
-# bot = telebot.TeleBot(config.TOKEN) # if local server
-token = os.environ['TOKEN'] # if heroku
+# bot = telebot.TeleBot(config.TOKEN)  # if local server
+token = os.environ['TOKEN']  # if heroku
+bot = telebot.TeleBot(token)  # if heroku
 
 @bot.message_handler()
 def sap(message):
