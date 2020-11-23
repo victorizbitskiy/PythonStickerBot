@@ -2,9 +2,14 @@ import telebot
 import config
 import os
 
-# bot = telebot.TeleBot(config.TOKEN)  # if local server
-token = os.environ['TOKEN']  # if heroku
-bot = telebot.TeleBot(token)  # if heroku
+# if local server
+# bot = telebot.TeleBot(config.TOKEN)
+
+# if heroku
+# when deploying the app run this command:
+# heroku config:set TOKEN=YOUR_TOKEN
+token = os.environ['TOKEN']
+bot = telebot.TeleBot(token)
 
 @bot.message_handler()
 def sap(message):
