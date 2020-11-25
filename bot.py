@@ -1,9 +1,11 @@
 import telebot
 import config
 import os
+import random
 
 # if local server
 # bot = telebot.TeleBot(config.TOKEN)
+
 
 # if heroku
 # when deploying the app run this command:
@@ -11,19 +13,22 @@ import os
 token = os.environ['TOKEN']
 bot = telebot.TeleBot(token)
 
+
 @bot.message_handler()
-def sap(message):
+def handler(message):
+    msg = message.text.lower()
 
-	if 'sap' in message.text or 'сап' in message.text:
-	  sti = open('static/sap.webp', 'rb')
-	  bot.send_sticker(message.chat.id, sti)
+    if config.apologize_request == msg:
+        bot.send_message(message.chat.id, "{0}, {1.first_name}".format(
+            random.choice(config.apologize_response),
+            message.from_user))
 
-	elif 'abap' in message.text or 'абап' in message.text:
-	  sti = open('static/abap.webp', 'rb')
-	  bot.send_sticker(message.chat.id, sti)
+    for key, value in config.dictionary.items():
+        words = value.split(",")
+        for word in words:
+            if word in msg:
+                sti = open(key, 'rb')
+                bot.send_sticker(message.chat.id, sti)
 
-	elif 'python' in message.text or 'питон' in message.text:
-	    sti = open('static/python.png', 'rb')
-	    bot.send_sticker(message.chat.id, sti)
 
 bot.polling(none_stop=True)
